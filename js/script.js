@@ -100,8 +100,8 @@ $('.activities label').on('change', function(){
       }
   })
 
-$('.activities').children().last().remove();
-$('.activities').append('<p>$' + cost +'</p>');
+$('#cost').remove();
+$('.activities').append('<p id="cost">$' + cost +'</p>');
 
 
 
@@ -131,3 +131,13 @@ $('#payment').on('change', function(){
 })
 
 //   /\w+\s\d{1,2}\w{2}[-]\d{1,2}\w{2}/   regex
+
+// This event listener checks the name field to ensure it is not blank when
+//focus moves away from the field. If it is blank it prints a error message to
+//the page. each time the focus moves it removes the error message and checks again.
+$('#name').on('blur', function(){
+  $('#nameValidation').remove();
+if($('#name').val().length <=0){
+  $("<p id='nameValidation'> Name Cannot Be Blank</p>").insertAfter('#name');
+};
+})
