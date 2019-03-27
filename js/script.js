@@ -1,8 +1,20 @@
+function prepPage(){
 //Sets focus to the first input when page loads
 $('#name').focus();
-
 //Hides the "other" job title field by default
 $('#other-title').hide();
+//sets initial value of payment options to crecit card
+$('#payment').val('credit card')
+//Assigns ids to the paypal and bitcoin divs
+$('#payment').next().next().prop('id', 'paypal').next().prop('id', 'bitcoin')
+//hides the paypal and bitcoin divs
+$('#paypal').hide();
+$('#bitcoin').hide();
+//hide the "select payment option" option
+$('#payment :nth-child(1)').hide();
+}
+
+prepPage();
 
 //Toggles the "other" job title field when 'other' is selected
 $('#title').on('click', function(){
@@ -94,6 +106,28 @@ $('.activities').append('<p>$' + cost +'</p>');
 
 
 
+})
+
+//This sets the payment type option to 'credit card' on page load. Assigns an
+//ID to the paypal and bitcoin divs, hides them on page load, and
+
+
+$('#payment').on('change', function(){
+  if($('#payment').val() == 'credit card'){
+    $('#credit-card').show();
+    $('#paypal').hide();
+    $('#bitcoin').hide();
+  }
+  else if($('#payment').val() == 'paypal'){
+    $('#credit-card').hide();
+    $('#paypal').show();
+    $('#bitcoin').hide();
+  }
+  else if($('#payment').val() == 'bitcoin'){
+    $('#credit-card').hide();
+    $('#paypal').hide();
+    $('#bitcoin').show();
+  }
 })
 
 //   /\w+\s\d{1,2}\w{2}[-]\d{1,2}\w{2}/   regex
