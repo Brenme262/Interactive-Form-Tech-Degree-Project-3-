@@ -12,6 +12,7 @@ $('#paypal').hide();
 $('#bitcoin').hide();
 //hide the "select payment option" option
 $('#payment :nth-child(1)').hide();
+$('.activities legend').prop('id', 'activityError');
 }
 
 prepPage();
@@ -93,6 +94,10 @@ $('.activities label').on('change', function(){
     })
   }
 }
+
+//this pulls the cost of the selected courses and adds it to the varaible cost,
+//each time a checkbox is selected. It also sets the value of cost to 0 each time
+//it is triggered.
   $('.activities').children().each(function(){
       if($(this).children().prop('checked')===true){
         cost += parseInt($(this).text().match(/\d{3}/).slice(0).toString());
@@ -108,8 +113,8 @@ $('.activities').append('<p id="cost">$' + cost +'</p>');
 
 })
 
-//This sets the payment type option to 'credit card' on page load. Assigns an
-//ID to the paypal and bitcoin divs, hides them on page load, and
+//This function controls what is hidden and displayed in reaction to the Payment
+//type the user selects.
 
 
 $('#payment').on('change', function(){
@@ -144,6 +149,10 @@ if($('#name').val().length <=0){
 };
 })
 
+//This event listener validates the email field, if the email is not valid
+//it prints out a error message to the page, and applies a red border to the
+//email field. each time it runs, it removes the error message and border.
+
 $('#mail').on('blur', function(){
   let email = $('#mail').val();
   //I found this regex test for email on emailregex.com
@@ -155,4 +164,29 @@ $('#mail').on('blur', function(){
     $("<p class='error' id='emailValidation'> Invalid Email Address</p>").insertAfter('#mail');
   }
 
+})
+
+//This event listener validates at least one class has been selected when the
+//submit button is clicked. Is does this by checking the value of the cost
+//varriable.
+
+$('button').on('click', function(e){
+  e.preventDefault();
+    $('#activityValidation').remove();
+  if(cost <= 0){
+    $("<p class='error' id='activityValidation'> You Must Select at Least One Activity</p>").insertAfter('#activityError');
+  }
+})
+
+$('#cc-num').on('blur', function(){
+  $('#ccNumberValidation').remove();
+  $('#cc-num').removeClass('error-border')
+  if($('#cc-num').val().length< 1){
+    $('#cc-num').addClass('error-border')
+    $("<p class='error' id='ccNumberValidation'>Please Enter a Credit Card Number </p>").insertAfter('#cc-num');
+  }
+  else if($('#cc-num').val().length < 13 || $('#cc-num').val().length > 16 ){
+    $('#cc-num').addClass('error-border')
+    $("<p class='error' id='ccNumberValidation'>Please Enter a Number Between 13 and 16 Digits </p>").insertAfter('#cc-num');
+  }
 })
