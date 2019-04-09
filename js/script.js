@@ -137,7 +137,22 @@ $('#payment').on('change', function(){
 //the page. each time the focus moves it removes the error message and checks again.
 $('#name').on('blur', function(){
   $('#nameValidation').remove();
+  $('#name').removeClass('error-border');
 if($('#name').val().length <=0){
-  $("<p id='nameValidation'> Name Cannot Be Blank</p>").insertAfter('#name');
+  $('#name').addClass('error-border')
+  $("<p class='error' id='nameValidation'> Name Cannot Be Blank</p>").insertAfter('#name');
 };
+})
+
+$('#mail').on('blur', function(){
+  let email = $('#mail').val();
+  //I found this regex test for email on emailregex.com
+  const emailRegEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+  $('#emailValidation').remove();
+  $('#mail').removeClass('error-border');
+  if(!email.match(emailRegEx)){
+    $('#mail').addClass('error-border')
+    $("<p class='error' id='emailValidation'> Invalid Email Address</p>").insertAfter('#mail');
+  }
+
 })

@@ -184,3 +184,11 @@ button:hover {
 .disabled{
   color: gray;
 }
+
+.error{
+  color: red;
+}
+
+.error-border{
+  border-color: red;
+}
